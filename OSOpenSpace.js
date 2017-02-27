@@ -45,10 +45,12 @@
    */
   L.OSOpenSpace.TileLayer = L.TileLayer.WMS.extend({
 
-    initialize: function (apiKey, hostUrl = 'file:///', options) { // (String, String, Object)
+    initialize: function (apiKey, hostUrl, options) { // (String, String, Object)
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
+      // Default hostUrl to file:///
+      hostUrl = typeof a !== 'undefined' ? hostUrl : 'file:///';
 
       L.TileLayer.WMS.prototype.initialize.call(this,
         'http://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
