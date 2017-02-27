@@ -45,7 +45,7 @@
    */
   L.OSOpenSpace.TileLayer = L.TileLayer.WMS.extend({
 
-    initialize: function (apiKey, options) { // (String, Object)
+    initialize: function (apiKey, hostUrl = 'file:///', options) { // (String, String, Object)
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
@@ -64,7 +64,7 @@
       this.wmsParams = {
         KEY: apiKey,
         FORMAT: 'image/png',
-        URL: 'file:///',
+        URL: hostUrl,
         REQUEST: 'GetMap',
         WIDTH: this.options.tileSize,
         HEIGHT: this.options.tileSize
