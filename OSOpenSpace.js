@@ -50,7 +50,7 @@
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
       // Default hostUrl to file:///
-      typeof options.URL !== 'undefined' ? options.URL : 'file:///';
+      hostURL = typeof options.URL !== 'undefined' ? options.URL : 'file:///';
 
       L.TileLayer.WMS.prototype.initialize.call(this,
         'http://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
@@ -66,6 +66,7 @@
       this.wmsParams = {
         KEY: apiKey,
         FORMAT: 'image/png',
+        URL: hostURL,
         REQUEST: 'GetMap',
         WIDTH: this.options.tileSize,
         HEIGHT: this.options.tileSize
