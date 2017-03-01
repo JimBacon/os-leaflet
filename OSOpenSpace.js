@@ -45,12 +45,12 @@
    */
   L.OSOpenSpace.TileLayer = L.TileLayer.WMS.extend({
 
-    initialize: function (apiKey, options) { // (String, Object)
+    initialize: function (apiKey, options, apiUrl) { // (String, Object, String)
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
-      // Default hostUrl to file:///
-      hostURL = typeof options.URL !== 'undefined' ? options.URL : 'file:///';
+      // Default apiUrl set to file:///
+      apiUrl = typeof apiUrl !== 'undefined' ? apiUrl : 'file:///';
 
       L.TileLayer.WMS.prototype.initialize.call(this,
         'http://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
@@ -66,7 +66,7 @@
       this.wmsParams = {
         KEY: apiKey,
         FORMAT: 'image/png',
-        URL: hostURL,
+        URL: apiUrl,
         REQUEST: 'GetMap',
         WIDTH: this.options.tileSize,
         HEIGHT: this.options.tileSize
@@ -97,10 +97,11 @@
    * @public
    * @param {string} apiKey Your API key for OSOpenSpace.
    * @param {object} options Any options to pass to the tilelayer.
-   * @return {L.TileLayer} TileLayer for Ordnance Survey OpenSpace service..
+   * @param {string} apiUrl The URL of your site as provided to OSOpenSpace.
+   * @return {L.TileLayer} TileLayer for Ordnance Survey OpenSpace service.
    */
-  L.OSOpenSpace.tilelayer = function (apiKey, options) {
-    return new L.OSOpenSpace.TileLayer(apiKey, options);
+  L.OSOpenSpace.tilelayer = function (apiKey, options, apiUrl) {
+    return new L.OSOpenSpace.TileLayer(apiKey, options, apiUrl);
   };
 
   return L.OSOpenSpace;
