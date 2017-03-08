@@ -60,7 +60,7 @@
       }
       else {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var year = new Date().getFullYear;
+        var year = new Date().getFullYear();
         if (width > 320) {
           attribution = '&copy; Crown copyright and database rights ' + year +  ' Ordnance Survey.'
         }
