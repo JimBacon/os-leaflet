@@ -52,14 +52,37 @@
       // Default apiUrl set to file:///
       apiUrl = typeof apiUrl !== 'undefined' ? apiUrl : 'file:///';
 
+      //  Default attribution set to comply with OS T&Cs
+      var attribution;
+      if (typeof options.attribution !== 'undefined') {
+        attribution = options.attribution;
+        delete options.attribution;
+      }
+      else {
+        var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        var year = new Date().getFullYear;
+        if (width > 320) {
+          attribution = '&copy; Crown copyright and database rights ' + year +  ' Ordnance Survey.'
+        }
+        else {
+          attribution = '&copy; Crown copyright 2013. Terms of Use.'
+        }
+      }
+
+      var layerOptions =  {
+        crs: L.OSOpenSpace.CRS,
+        maxZoom: 14,
+        minZoom: 0,
+        tileSize: 200,
+//      attribution: '&copy; <a href="https://www.ordnancesurvey.co.uk/osmaps/">Ordnance Survey</a>.'
+      };
+      if (attribution !== false) {
+        layerOptions.attribution = attribution;
+      }
+
       L.TileLayer.WMS.prototype.initialize.call(this,
-        'https://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
-          crs: L.OSOpenSpace.CRS,
-          maxZoom: 14,
-          minZoom: 0,
-          tileSize: 200,
-          attribution: '&copy; <a href="https://www.ordnancesurvey.co.uk/osmaps/">Ordnance Survey</a>.'
-        },
+        'https://openspace.ordnancesurvey.co.uk/osmapapi/ts', 
+        layerOptions,
         options
       );
 
