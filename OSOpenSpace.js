@@ -62,10 +62,10 @@
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var year = new Date().getFullYear();
         if (width > 320) {
-          attribution = '&copy; Crown copyright and database rights ' + year +  ' Ordnance Survey.'
+          attribution = '&copy; Crown copyright and database rights ' + year + ' Ordnance Survey.'
         }
         else {
-          attribution = '&copy; Crown copyright 2013. Terms of Use.'
+          attribution = '&copy; Crown copyright ' + year + '. Terms of Use.'
         }
       }
 
