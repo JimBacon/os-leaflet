@@ -63,11 +63,11 @@
         var year = new Date().getFullYear();
         if (width > 320) {
           attribution = '&copy; Crown copyright and database rights ' + year + 
-              ' Ordnance Survey. <a href="javascript:showTermsAndConditions();">Terms of Use</a>';
+              ' Ordnance Survey. <a href="javascript:L.OSOpenSpace.showConditions()">Terms of Use</a>';
         }
         else {
           attribution = '&copy; Crown copyright ' + year + 
-              '. <a href="javascript:showTermsAndConditions();">Terms of Use</a>.';
+              '. <a href="javascript:L.OSOpenSpace.showConditions()">Terms of Use</a>.';
         }
       }
 
@@ -115,7 +115,10 @@
       return this._url + L.Util.getParamString(this.wmsParams); // eslint-disable-line no-underscore-dangle
     },
 
-    showTermsAndConditions: function() {
+  });
+
+
+  L.OSOpenSpace.showConditions = function () {
       var xhr= new XMLHttpRequest();
       xhr.open('GET', 'conditions.html', true);
       xhr.onreadystatechange= function() {
@@ -124,12 +127,8 @@
           document.getElementsByClassName('leaflet-control-attribution')[0].innerHTML= this.responseText;
       };
       xhr.send();
-    },
+  };
 
-    hideTermsAndConditions: function() {
-
-    }
-  });
 
   /*
    * Factory method to create a new OSOpenSpace tilelayer.
