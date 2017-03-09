@@ -62,10 +62,12 @@
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var year = new Date().getFullYear();
         if (width > 320) {
-          attribution = '&copy; Crown copyright and database rights ' + year + ' Ordnance Survey.'
+          attribution = '&copy; Crown copyright and database rights ' + year + 
+              ' Ordnance Survey. <a onlcick="showTermsAndConditions()">Terms of Use</a>';
         }
         else {
-          attribution = '&copy; Crown copyright ' + year + '. Terms of Use.'
+          attribution = '&copy; Crown copyright ' + year + 
+              '. <a onlcick="showTermsAndConditions()">Terms of Use</a>.';
         }
       }
 
@@ -111,6 +113,21 @@
       this.wmsParams.LAYERS = resolutionMpp;
 
       return this._url + L.Util.getParamString(this.wmsParams); // eslint-disable-line no-underscore-dangle
+    },
+
+    showTermsAndConditions: function() {
+      var xhr= new XMLHttpRequest();
+      xhr.open('GET', 'conditions.html', true);
+      xhr.onreadystatechange= function() {
+          if (this.readyState!==4) return;
+          if (this.status!==200) return; // or whatever error handling you want
+          document.getElementsByClassName('leaflet-control-attribution')[0].innerHTML= this.responseText;
+      };
+      xhr.send();
+    },
+
+    hideTermsAndConditions: function() {
+
     }
   });
 
