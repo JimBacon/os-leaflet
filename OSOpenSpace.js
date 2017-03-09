@@ -63,11 +63,11 @@
         var year = new Date().getFullYear();
         if (width > 320) {
           attribution = '&copy; Crown copyright and database rights ' + year + 
-              ' Ordnance Survey. <a onlcick="showTermsAndConditions()">Terms of Use</a>';
+              ' Ordnance Survey. <a href="javascript:showTermsAndConditions();">Terms of Use</a>';
         }
         else {
           attribution = '&copy; Crown copyright ' + year + 
-              '. <a onlcick="showTermsAndConditions()">Terms of Use</a>.';
+              '. <a href="javascript:showTermsAndConditions();">Terms of Use</a>.';
         }
       }
 

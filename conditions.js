@@ -1,4 +1,4 @@
-<h3>End User Terms of Use (Terms of Use)</h3>
+var conditions = `<h3>End User Terms of Use (Terms of Use)</h3>
 
 <p><strong>Your use of the Application is governed by this agreement between ‘you’ and the Developer (the ‘End User Terms of Use (Terms of Use)’) Please read these Terms of Use and ensure that you have understood them. If you do not agree to these Terms of Use, please immediately stop using the Application, including the Ordnance&nbsp;Survey Data.</strong></p>
 
@@ -100,4 +100,4 @@
 <p>Clauses 1, 2.1, 2.3(a), 2.4(b), 3, 4, 7.2 and 7.3 inclusive shall survive termination of these Terms of Use for any reason.</p>
 
 <h5>7.3 Governing Law and Jurisdiction</h5>
-<p>These Terms of Use shall be governed by and construed in accordance with English law and the parties submit to the exclusive jurisdiction of the English courts in respect of any proceedings issued by any party in connection with these Terms of Use</p>
+<p>These Terms of Use shall be governed by and construed in accordance with English law and the parties submit to the exclusive jurisdiction of the English courts in respect of any proceedings issued by any party in connection with these Terms of Use</p>`;
