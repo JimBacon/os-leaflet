@@ -8,12 +8,12 @@
   // UMD for  Node, AMD or browser globals
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['leaflet', 'proj4leaflet'], factory);
+    define(['leaflet', 'proj4leaflet', './OSLicensing'], factory);
   } else if (typeof exports === 'object') {
     // Node & CommonJS-like environments.
     var L = require('leaflet'); // eslint-disable-line vars-on-top
     require('proj4leaflet');
-
+    require('./OSLicensing');
     module.exports = factory(L);
   } else {
     // Browser globals

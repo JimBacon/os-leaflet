@@ -20,7 +20,6 @@ L.OSOpenSpace._termsClickHandler = function(map) {
   termLink.addEventListener('click', function(e) {
     var south = map.getBounds().getSouth();
     var north = map.getBounds().getNorth();
-    var height = map.getSize().y;
     var popupLat = south + 0.1 * (north - south);  // 10% up from bottom.
     var popupLng = map.getBounds().getCenter().lng;
     var size = map.getSize();
