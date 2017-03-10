@@ -4,7 +4,8 @@
   "description": "A Leaflet js TileLayer using Ordnance Survey OpenSpace web map service",
   "main": "OSOpenSpace.js",
   "files": [
-    "conditions.js"
+    "OSLicensing.js",
+    "OSLicensing.css"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

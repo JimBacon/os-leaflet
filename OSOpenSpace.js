@@ -54,21 +54,12 @@
 
       //  Default attribution set to comply with OS T&Cs
       var attribution;
-      if (typeof options.attribution !== 'undefined') {
-        attribution = options.attribution;
-        delete options.attribution;
+      if (typeof options.attribution === 'undefined') {
+        attribution = L.OSOpenSpace.attribution();
       }
       else {
-        var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var year = new Date().getFullYear();
-        if (width > 320) {
-          attribution = '&copy; Crown copyright and database rights ' + year + 
-              ' Ordnance Survey. <a href="javascript:L.OSOpenSpace.showConditions()">Terms of Use</a>';
-        }
-        else {
-          attribution = '&copy; Crown copyright ' + year + 
-              '. <a href="javascript:L.OSOpenSpace.showConditions()">Terms of Use</a>.';
-        }
+        attribution = options.attribution;
+        delete options.attribution;
       }
 
       var layerOptions =  {
@@ -76,7 +67,6 @@
         maxZoom: 14,
         minZoom: 0,
         tileSize: 200,
-//      attribution: '&copy; <a href="https://www.ordnancesurvey.co.uk/osmaps/">Ordnance Survey</a>.'
       };
       if (attribution !== false) {
         layerOptions.attribution = attribution;
@@ -96,6 +86,7 @@
         WIDTH: this.options.tileSize,
         HEIGHT: this.options.tileSize
       };
+
     },
 
   /**
@@ -115,20 +106,21 @@
       return this._url + L.Util.getParamString(this.wmsParams); // eslint-disable-line no-underscore-dangle
     },
 
+    onAdd: function (map) {
+      // Call parent function.
+      L.TileLayer.WMS.prototype.onAdd.call(this, map);
+
+      // Trigger an event when adding of layer has finished.
+      map.on('layeradd', function(e) {
+        // Check it is the OS OpenSpace layer (note 'this' has been bound).
+        if (e.layer == this) {
+          // Add a click handler to a Terms of Use link.
+          L.OSOpenSpace._termsClickHandler(map);
+       }
+      }.bind(this));
+
+    },
   });
-
-
-  L.OSOpenSpace.showConditions = function () {
-      var xhr= new XMLHttpRequest();
-      xhr.open('GET', 'conditions.html', true);
-      xhr.onreadystatechange= function() {
-          if (this.readyState!==4) return;
-          if (this.status!==200) return; // or whatever error handling you want
-          document.getElementsByClassName('leaflet-control-attribution')[0].innerHTML= this.responseText;
-      };
-      xhr.send();
-  };
-
 
   /*
    * Factory method to create a new OSOpenSpace tilelayer.
