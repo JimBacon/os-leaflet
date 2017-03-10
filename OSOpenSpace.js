@@ -111,12 +111,12 @@
 
       // Trigger an event when adding of layer has finished.
       map.on('layeradd', function(e) {
-        // Check it is the OS OpenSpace layer (note 'this' has been bound).
+        // Check it is the OS OpenSpace layer.
         if (e.layer == this) {
           // Add a click handler to a Terms of Use link.
           L.OSOpenSpace._termsClickHandler(map);
        }
-      }.bind(this));
+      }, this);
 
     },
   });
@@ -166,6 +166,13 @@
         "keepInView": true,
         "className": "os-terms-popup"
       });
+
+      var controls = mapDiv.getElementsByClassName("leaflet-control-container")[0];
+      controls.style.display = "none";
+      map.once("popupclose", function(e) {
+        this.style.display = "block";
+      }, controls);
+
     });
   };
 
