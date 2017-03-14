@@ -1,12 +1,10 @@
-os-leaflet
-==========
+# os-leaflet
 
 [![npm version](https://badge.fury.io/js/os-leaflet.svg)](http://badge.fury.io/js/os-leaflet)
 
 A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey map data in your Leaflet map via the OS OpenSpace web map service.
 
-**Important:** This project is no way affiliated, nor supported or endorsed by Ordnance Survey. The use of this project does not comply with the Ordnance Survey OpenSpace service [terms and conditions](http://www.ordnancesurvey.co.uk/business-and-government/licensing/licences/os-openspace-developer-agreement.html). Use at your peril!
-
+This project is no way affiliated, nor supported or endorsed by Ordnance Survey. Please review Ordnance Survey OpenSpace service [terms and conditions](https://www.ordnancesurvey.co.uk/business-and-government/licensing/licences/os-openspace-developer-agreement.html)
 
 ## Description
 
@@ -33,7 +31,7 @@ This repository contains the following sections:
 
 ## Getting started
 
-You can get hold of the code with npm and it should work fine with [browserify](http://browserify.org/). Or you can just manually import the layer.
+You can get hold of the code using npm and it should work fine with [browserify](http://browserify.org/). Or you can just manually import the layer.
 
 ### Dependency management
 
@@ -49,7 +47,7 @@ Then just require the libary along with Leaflet in your app.
 
 ```javascript
 require('os-leaflet');
-layer = L.OSOpenSpace.tilelayer(apiKey, ...options);
+layer = L.OSOpenSpace.tilelayer(apiKey, apiUrl, ...options);
 ```
 
 ### Manually
@@ -76,14 +74,14 @@ This layer uses the OS Openspace Free service and with the mapstack or products 
 
 The **os-leaflet** project extends Leaflet's `L.TileLayer.WMS` class and integrates easily with Leaflet.
 
-To use the Layer in your map just get the `L.Proj.CRS` - Coordinate Reference System, how the earth is represented in this part of the world - via a factory method.
+To use the Layer in your map just get the **EPSG:27700** `L.Proj.CRS` (Coordinate Reference System - how the earth is represented on Ordnance Survey maps) - via a factory method as below.
 
 
 ```javascript
 var osgbCrs = L.OSOpenSpace.CRS;
 ```
 
-Create a `L.Map` as normal but specify the `L.Proj.CRS` created above and set Leaflet options `continuousWorld` to `true` and `worldCopyJump` to `false`. The zoom levels available are essentially the layers provided by this `OSOpenSpace` layer so set these as below.
+Create a `L.Map` as normal but specify the `L.Proj.CRS` from this library, see example below. The zoom levels available are essentially the layers provided by this `OSOpenSpace` layer so set these as below.
 
 ```javascript
 var map = new L.Map('map', {
@@ -92,17 +90,26 @@ var map = new L.Map('map', {
 });
 ```
 
-Finally, create a new `L.TileLayer` via the factory method `L.OSOpenSpace.tilelayer` and add to the map instance as normal. `L.OSOpenSpace.tilelayer` takes two params, `(apiKey, options)` as `(String, Object)` - the `apiKey` should be the Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used.
+Finally, create a new `L.TileLayer` via the factory method `L.OSOpenSpace.tilelayer` and add to the map instance as normal. `L.OSOpenSpace.tilelayer` accepts the parameters below.
+
+| Argument | Required? | Description |
+|---|---|---|
+| `apiKey` | Yes | The Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used. |
+| `apiUrl` | No | The URL of your site associated with the API key, as provided to OSOpenSpace |
+| `options` | No | An object of layer options to pass to the tilelayer |
 
 
 ```javascript
-var openspaceLayer = L.OSOpenSpace.tilelayer("<API Key>", {});
+var options = {};
+var openspaceLayer = L.OSOpenSpace.tilelayer("<API Key>", "<API URL>", options);
 map.addLayer(openspaceLayer);
 ```
 
-Don't forget to set the map centre to somewhere in Great Britain too.
+Don't forget to set the map centre to somewhere in Great Britain too 😉
 
-See [our demo](http://rob-murray.github.io/os-leaflet/) for an example of using the layer.
+### Example
+
+Check [out the demo](http://rob-murray.github.io/os-leaflet/) for an example of how to use the layer.
 
 
 ### Map products
@@ -115,6 +122,31 @@ This layer is currently hard-coded to work with only Ordnance Survey products th
 ```
 
 For the full spec, see [OS website](http://www.ordnancesurvey.co.uk/business-and-government/help-and-support/web-services/os-ondemand/configuring-wmts.html).
+
+### Coordinates
+
+Points can be added to the map in WGS84 reference system - if you have British National Grid coords then these should be converted.
+
+```javascript
+L.polygon([
+  [50.978633, -1.5740458],
+  [51.068553, -1.5732215],
+  [51.067945, -1.4305097],
+  [50.978027, -1.4316098]
+]).addTo(map).bindPopup('I am the SU32 10K square');
+```
+
+### OS Logo
+
+The Ordnance Survey logo in the bottom left can be removed, along with other attribution, by supplying the option `{ attributionControl: false }` to the map constructor. It it enabled by default.
+
+```javascript
+map = new L.Map('map', {
+  zoom: 6,
+  crs: L.OSOpenSpace.CRS,
+  attributionControl: false
+});
+```
 
 
 ## Issues
