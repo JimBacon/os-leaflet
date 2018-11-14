@@ -90,7 +90,7 @@
    */
     getTileUrl: function (tilePoint) { // (Point, Number) -> String
       var OSZoom = tilePoint.z + this.options.zoomOffset
-      let maxRow = this._crs.options.maxRows[OSZoom];
+      var maxRow = this._crs.options.maxRows[OSZoom];
       this.wmsParams.tileRow = (maxRow + tilePoint.y + 1);
       this.wmsParams.tileCol = tilePoint.x;
       this.wmsParams.tileMatrix = 'EPSG:27700:' + (OSZoom);
